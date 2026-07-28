@@ -1,6 +1,7 @@
 package com.kart1kg.raven.engine
 
 import android.util.Log
+import com.kart1kg.raven.data.ServerState
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -140,14 +141,3 @@ class Socks5Server {
         _serverState.value = current.copy(recentConnections = updated)
     }
 }
-
-/**
- * Immutable snapshot of the server's current state, observed by the UI.
- */
-data class ServerState(
-    val isRunning: Boolean = false,
-    val port: Int = 1080,
-    val activeConnections: Int = 0,
-    val totalConnections: Long = 0,
-    val recentConnections: List<ConnectionInfo> = emptyList()
-)

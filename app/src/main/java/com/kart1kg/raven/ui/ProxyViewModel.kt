@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Intent
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
-import com.kart1kg.raven.engine.ServerState
+import com.kart1kg.raven.data.ServerState
 import com.kart1kg.raven.service.SocksProxyService
 import com.kart1kg.raven.util.NetworkUtils
 import kotlinx.coroutines.flow.MutableStateFlow
