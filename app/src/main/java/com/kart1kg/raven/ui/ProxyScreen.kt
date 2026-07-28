@@ -65,14 +65,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.kart1kg.raven.engine.ConnectionInfo
 import com.kart1kg.raven.engine.ConnectionStatus
-import com.kart1kg.raven.ui.theme.RavenCard
-import com.kart1kg.raven.ui.theme.RavenError
-import com.kart1kg.raven.ui.theme.RavenOnSurfaceDim
-import com.kart1kg.raven.ui.theme.RavenOutline
-import com.kart1kg.raven.ui.theme.RavenPrimary
-import com.kart1kg.raven.ui.theme.RavenSecondary
-import com.kart1kg.raven.ui.theme.RavenSuccess
-import com.kart1kg.raven.ui.theme.RavenWarning
+
+private val SuccessColor = Color(0xFF4CAF50)
+private val WarningColor = Color(0xFFFFC107)
 
 @Composable
 fun ProxyScreen(viewModel: ProxyViewModel, modifier: Modifier = Modifier) {
@@ -168,7 +163,7 @@ private fun HeaderSection() {
         Icon(
             imageVector = Icons.Filled.Security,
             contentDescription = null,
-            tint = RavenPrimary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier.size(32.dp)
         )
         Spacer(modifier = Modifier.width(12.dp))
@@ -182,7 +177,7 @@ private fun HeaderSection() {
             Text(
                 "SOCKS5 Proxy Server",
                 style = MaterialTheme.typography.bodySmall,
-                color = RavenOnSurfaceDim,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 letterSpacing = 2.sp
             )
         }
@@ -200,7 +195,7 @@ private fun PowerSection(
     onToggle: () -> Unit
 ) {
     val glowColor by animateColorAsState(
-        targetValue = if (isRunning) RavenPrimary.copy(alpha = 0.3f)
+        targetValue = if (isRunning) MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
         else Color.Transparent,
         animationSpec = tween(600),
         label = "glow"
@@ -243,7 +238,7 @@ private fun PowerSection(
                 modifier = Modifier.size(96.dp),
                 shape = CircleShape,
                 colors = IconButtonDefaults.filledIconButtonColors(
-                    containerColor = if (isRunning) RavenPrimary else MaterialTheme.colorScheme.surfaceVariant,
+                    containerColor = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
                     contentColor = if (isRunning) MaterialTheme.colorScheme.onPrimary
                     else MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -265,15 +260,15 @@ private fun PowerSection(
                     .size(8.dp)
                     .clip(CircleShape)
                     .background(
-                        if (isRunning) RavenSuccess.copy(alpha = pulseAlpha)
-                        else RavenOnSurfaceDim
+                        if (isRunning) SuccessColor.copy(alpha = pulseAlpha)
+                        else MaterialTheme.colorScheme.onSurfaceVariant
                     )
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = if (isRunning) "ACTIVE" else "INACTIVE",
                 style = MaterialTheme.typography.labelLarge,
-                color = if (isRunning) RavenSuccess else RavenOnSurfaceDim,
+                color = if (isRunning) SuccessColor else MaterialTheme.colorScheme.onSurfaceVariant,
                 letterSpacing = 3.sp
             )
         }
@@ -286,7 +281,7 @@ private fun PowerSection(
             Text(
                 text = "$activeConnections active connection(s)",
                 style = MaterialTheme.typography.bodySmall,
-                color = RavenPrimary,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.padding(top = 4.dp)
             )
         }
@@ -311,7 +306,7 @@ private fun PortConfigCard(
             Icon(
                 imageVector = Icons.Rounded.Language,
                 contentDescription = null,
-                tint = RavenPrimary,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(12.dp))
@@ -324,7 +319,7 @@ private fun PortConfigCard(
                 Text(
                     "SOCKS5 server port",
                     style = MaterialTheme.typography.bodySmall,
-                    color = RavenOnSurfaceDim
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
             OutlinedTextField(
@@ -339,10 +334,10 @@ private fun PortConfigCard(
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = RavenPrimary,
-                    unfocusedBorderColor = RavenOutline,
-                    disabledBorderColor = RavenOutline.copy(alpha = 0.5f),
-                    disabledTextColor = RavenOnSurfaceDim
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
+                    unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                    disabledBorderColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f),
+                    disabledTextColor = MaterialTheme.colorScheme.onSurfaceVariant
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -369,7 +364,7 @@ private fun ConnectionInfoCard(
                 Icon(
                     imageVector = Icons.Filled.Wifi,
                     contentDescription = null,
-                    tint = if (isRunning) RavenPrimary else RavenOnSurfaceDim,
+                    tint = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(24.dp)
                 )
                 Spacer(modifier = Modifier.width(12.dp))
@@ -389,7 +384,7 @@ private fun ConnectionInfoCard(
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
                     .background(MaterialTheme.colorScheme.background)
-                    .border(1.dp, RavenOutline, RoundedCornerShape(12.dp))
+                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
                     .padding(horizontal = 16.dp, vertical = 12.dp)
             ) {
                 Text(
@@ -397,7 +392,7 @@ private fun ConnectionInfoCard(
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontFamily = FontFamily.Monospace
                     ),
-                    color = if (isRunning) RavenPrimary else RavenOnSurfaceDim,
+                    color = if (isRunning) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.weight(1f)
                 )
                 FilledIconButton(
@@ -406,8 +401,8 @@ private fun ConnectionInfoCard(
                     },
                     modifier = Modifier.size(36.dp),
                     colors = IconButtonDefaults.filledIconButtonColors(
-                        containerColor = RavenPrimary.copy(alpha = 0.15f),
-                        contentColor = RavenPrimary
+                        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                        contentColor = MaterialTheme.colorScheme.primary
                     )
                 ) {
                     Icon(
@@ -424,7 +419,7 @@ private fun ConnectionInfoCard(
             Text(
                 "Setup Instructions",
                 style = MaterialTheme.typography.labelMedium,
-                color = RavenOnSurfaceDim,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(bottom = 6.dp)
             )
             InstructionStep("1", "Enable hotspot on this phone")
@@ -446,12 +441,12 @@ private fun InstructionStep(number: String, text: String) {
             modifier = Modifier
                 .size(20.dp)
                 .clip(CircleShape)
-                .background(RavenPrimary.copy(alpha = 0.15f))
+                .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.15f))
         ) {
             Text(
                 number,
                 style = MaterialTheme.typography.labelSmall,
-                color = RavenPrimary
+                color = MaterialTheme.colorScheme.primary
             )
         }
         Spacer(modifier = Modifier.width(10.dp))
@@ -476,8 +471,8 @@ private fun StatsCard(activeConnections: Int, totalConnections: Long) {
                 .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            StatItem("Active", activeConnections.toString(), RavenPrimary)
-            StatItem("Total", totalConnections.toString(), RavenSecondary)
+            StatItem("Active", activeConnections.toString(), MaterialTheme.colorScheme.primary)
+            StatItem("Total", totalConnections.toString(), MaterialTheme.colorScheme.secondary)
         }
     }
 }
@@ -494,7 +489,7 @@ private fun StatItem(label: String, value: String, color: Color) {
         Text(
             label.uppercase(),
             style = MaterialTheme.typography.labelSmall,
-            color = RavenOnSurfaceDim,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             letterSpacing = 2.sp
         )
     }
@@ -507,10 +502,10 @@ private fun StatItem(label: String, value: String, color: Color) {
 @Composable
 private fun ConnectionItem(conn: ConnectionInfo) {
     val statusColor = when (conn.status) {
-        ConnectionStatus.CONNECTING -> RavenWarning
-        ConnectionStatus.RELAYING -> RavenSuccess
-        ConnectionStatus.CLOSED -> RavenOnSurfaceDim
-        ConnectionStatus.ERROR -> RavenError
+        ConnectionStatus.CONNECTING -> WarningColor
+        ConnectionStatus.RELAYING -> SuccessColor
+        ConnectionStatus.CLOSED -> MaterialTheme.colorScheme.onSurfaceVariant
+        ConnectionStatus.ERROR -> MaterialTheme.colorScheme.error
     }
 
     GlassCard {
@@ -544,26 +539,26 @@ private fun ConnectionItem(conn: ConnectionInfo) {
 
             if (conn.bytesUploaded > 0 || conn.bytesDownloaded > 0) {
                 Spacer(modifier = Modifier.height(6.dp))
-                HorizontalDivider(color = RavenOutline, thickness = 0.5.dp)
+                HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
                 Spacer(modifier = Modifier.height(6.dp))
                 Row {
                     Icon(
                         Icons.Filled.SwapVert,
                         contentDescription = null,
-                        tint = RavenOnSurfaceDim,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         "↑ ${formatBytes(conn.bytesUploaded)}",
                         style = MaterialTheme.typography.labelSmall,
-                        color = RavenOnSurfaceDim
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(
                         "↓ ${formatBytes(conn.bytesDownloaded)}",
                         style = MaterialTheme.typography.labelSmall,
-                        color = RavenOnSurfaceDim
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }
@@ -583,7 +578,7 @@ private fun GlassCard(
     Card(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = RavenCard),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
     ) {
         content()
     }
