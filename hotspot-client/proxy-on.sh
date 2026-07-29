@@ -36,6 +36,7 @@ echo "Phone detected at IP (Gateway): $PROXY_IP"
 # 1. Create a virtual TUN interface named 'tun0'
 sudo ip tuntap add mode tun dev tun0 2>/dev/null
 sudo ip addr add 198.18.0.1/15 dev tun0
+sudo ip -6 addr add fd00::1/64 dev tun0
 sudo ip link set dev tun0 up
 
 # 2. Start tun2socks in the background and save its process ID (PID)
@@ -49,6 +50,7 @@ echo "Updating routing tables..."
 sudo ip route add $PROXY_IP via $PROXY_IP dev $(ip route show default | awk '/default/ {print $5}')
 # Route everything else through the TUN interface
 sudo ip route add default dev tun0 metric 1
+sudo ip -6 route add default dev tun0 metric 1
 
 # 4. Update DNS to use DNS-over-TLS (TCP) so it routes through Raven
 echo "Configuring DNS-over-TLS..."
