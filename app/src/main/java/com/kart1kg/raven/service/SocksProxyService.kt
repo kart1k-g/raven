@@ -124,7 +124,7 @@ class SocksProxyService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Raven Proxy Active")
             .setContentText("Port $port · $activeConnections active connection(s)")
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.launcher_icon_foreground)
             .setOngoing(true)
             .setContentIntent(openAppPending)
             .addAction(0, "Stop", stopPending)
